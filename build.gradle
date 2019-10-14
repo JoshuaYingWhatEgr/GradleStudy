@@ -4,11 +4,11 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
-        
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -18,10 +18,85 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task hello {
+    doLast {
+        println "hello gradle!"
+    }
+}
+
+/**
+ * 通过task设置要下载的gradle的版本
+ */
+task wrappers(type: Wrapper) {
+    gradleVersion = '5.6.2'
+}
+
+task printStringClass {
+
+    def str1 = '单引号'
+    def str2 = "双引号"
+
+    println "单引号的引用类型：" + str1.getClass().getName();
+    println "双引号的引用类型：" + str2.getClass().getName();
+}
+
+task printStringVar {
+
+    def name = "张三"
+
+    println '单引号是否可以做运算：${name}'
+    println "双引号是否可以做运算：${name}"
+}
+
+task printList {
+
+    def numList = [1, 2, 3, 4, 5, 6];
+
+    println numList.getClass().name
+
+    println numList[1]//这个表示访问的是左边第一个元素
+    println numList[-1]//这个表示访问的是右边第一个元素
+    println numList[1..3]//这个表示访问第二个到第4个的元素
+
+    //迭代器
+    numList.each {
+        println it
+    }
+}
+
+task printMap {
+    def map = ["width":1024,"height":768]
+
+    println map.getClass().name
+
+    println map["width"]
+    println map["height"]
+
+    map.each {
+        println "key:${it.key},value:${it.value}"
+    }
+
+    map.find {
+        println "${it.key}"
+    }
+}
+
+task printMethod {
+
+    method1(1,2)
+
+    method1 1,2
+
+}
+
+def method1(int a, int b) {
+    println a+b
 }
